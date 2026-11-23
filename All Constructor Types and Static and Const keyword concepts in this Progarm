@@ -1,1 +1,116 @@
+#include<iostream>
+#include<string>
+using namespace std;
+class Patient{
+private:
+    string patientName, disease;
+    int patientID, age;
+    static int totalPatients;
+    const int hospitalCode;
+public:
+    // Default Constructor
+    Patient() : hospitalCode(2010){
+        patientName = "Unknown";
+        disease = "Unknown";
+        patientID = 0;
+        age = 0;
+        totalPatients++;
+    }
+    // Parameterized Constructor
+    Patient(string name, string dis, int id, int a) : hospitalCode(2010){
+        patientName = name;
+        disease = dis;
+        patientID = id;
+        age = a;
+        totalPatients++;
+    }
+    // Constructor with Name and ID
+    Patient(string name, int id) : hospitalCode(2010){
+        patientName = name;
+        patientID = id;
+        disease = "Unknown";
+        age = 0;
+        totalPatients++;
+    }
+    // Copy Constructor
+    Patient(const Patient &p) : hospitalCode(p.hospitalCode){
+        patientName = p.patientName;
+        patientID = p.patientID;
+        disease = p.disease;
+        age = p.age;
+        totalPatients++;
+    }
+    // Function to take patient information
+    void patientInfo(){
+        cout << "Enter Patient Name: ";
+        getline(cin, patientName);
 
+        cout << "Enter Patient ID: ";
+        cin >> patientID;
+        cin.ignore();
+
+        cout << "Enter Patient Disease: ";
+        getline(cin, disease);
+
+        cout << "Enter Patient Age: ";
+        cin >> age;
+        cin.ignore();
+    }
+    // Static Function
+    static void tPatient(){
+        cout << "Total Patients = " << totalPatients << endl;
+    }
+    // Display Patient Record
+    void patientRecord() const{
+        cout << "\n--- Patient Record ---" << endl;
+        cout << "Hospital Code: " << hospitalCode << endl;
+        cout << "Patient Name: " << patientName << endl;
+        cout << "Patient ID: " << patientID << endl;
+        cout << "Patient Disease: " << disease << endl;
+        cout << "Patient Age: " << age << endl;
+    }
+    // Destructor
+    ~Patient(){
+        cout << "Object is destroyed" << endl;
+    }
+};
+// Initialize static variable
+int Patient::totalPatients = 0;
+int main(){
+    string name, disease;
+    int id, age;
+    // Taking data from user
+    cout << "Enter Name: ";
+    getline(cin, name);
+    cout << "Enter ID: ";
+    cin >> id;
+    cin.ignore();
+    cout << "Enter Disease: ";
+    getline(cin, disease);
+    cout << "Enter Age: ";
+    cin >> age;
+    cin.ignore();
+    // Default Constructor
+    Patient P1;
+    // Parameterized Constructor
+    Patient P2(name, disease, id, age);
+    // Constructor with Name and ID
+    Patient P3(name, id);
+    // Display P2 record
+    P2.patientRecord();
+    // Taking new information for P1
+    cout << "\nEnter information for P1:\n";
+    P1.patientInfo();
+    // Display P1 record
+    P1.patientRecord();
+    // Display P3 record
+    P3.patientRecord();
+    // Display total patients
+    Patient::tPatient();
+    // Copy Constructor
+    Patient P4(P2);
+    cout << "\nCopied Patient Record:" << endl;
+    P4.patientRecord();
+    return 0;
+}
+}
